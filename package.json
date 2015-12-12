@@ -9,6 +9,7 @@
   "author": "Bruno Orlandi",
   "license": "ISC",
   "dependencies": {
+    "giphy-api": "^1.1.11",
     "node-telegram-bot-api": "^0.17.0"
   }
 }
