@@ -1,6 +1,8 @@
-# Chewbot for Telegram
-Just a simple bot for Telegram. Use the BotFather to generate an API Token for use this bot with Telegram.
+# Chewbacca for Telegram
+Just a simple bot for Telegram. If you want to run the bot by yourself use the BotFather to generate an API Token. You can contact Chewbacca via the link below.
 > "RRRAARRWHHGWWR.", Chewbacca
+
+# [telegram.me/Chewbot](telegram.me/Chewbot)
 
 ## Running
 Run with the 'TOKEN' env var setted with your Bot Token.
