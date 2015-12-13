@@ -9,6 +9,3 @@ Run with the 'TOKEN' env var setted with your Bot Token.
 
 ## How to use
 Talks to Chewbacca and he will always answer you with a voice message.
-
-## Improvements
-- [ ] Command /gif answer with a random Chewbacca Gif using Giphy API.
