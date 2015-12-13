@@ -11,6 +11,19 @@ if(token === ""){
 // Setup polling way
 var bot = new TelegramBot(token, {polling: true});
 
+var http = require('http');
+var fs = require('fs');
+
+var downloadFile = function(url, dest, cb) {
+  var file = fs.createWriteStream(dest);
+  var request = http.get(url, function(response) {
+    response.pipe(file);
+    file.on('finish', function() {
+      file.close(cb);  // close() is async, call cb after close completes.
+    });
+  });
+}
+
 
 bot.onText(/\/start/, function (msg, match) {
   var fromId = msg.from.id;
@@ -23,10 +36,15 @@ bot.onText(/\/gif/, function (msg, match) {
   bot.sendChatAction(chatId,'upload_photo');
 
   giphy.translate('chewbacca').then((res)=>{
-    var gif = res.data.images.fixed_height.url;
-    console.log("Sending gif "+ gif +" to: "+msg.from.first_name + " " + msg.from.last_name+ " : ");
-    //console.log(res.data.images.fixed_height.url);
-    bot.sendPhoto(chatId,gif,{reply_to_message_id: replyTo});
+    var gifUrl = res.data.images.fixed_height_downsampled.url;
+    console.log("Sending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " : ");
+    var gifFile = "gifs/"+(new Date()).getTime()+".gif";
+    downloadFile(gifUrl,gifFile,(a)=>{
+        //console.log("File downloaded: "+gifFile);
+        bot.sendDocument(chatId,gifFile).then((res)=>{
+            fs.unlink(gifFile);
+        });
+    });
     
   });
 });
@@ -46,7 +64,7 @@ bot.on('message', function (msg) {
   var audio = 'sounds/mp3/s'+rand+'.mp3';
   console.log("Sending: " + audio);
   var replyTo = msg.message_id;
-  var randTime = Math.floor(Math.random()*1000)+2000;
+  var randTime = Math.floor(Math.random()*1000)+1000;
   console.log("time: " + randTime)
   setTimeout(()=>{
     bot.sendVoice(chatId, audio, {reply_to_message_id: replyTo});
