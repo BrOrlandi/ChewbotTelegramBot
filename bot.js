@@ -36,7 +36,7 @@ bot.onText(/\/gif/, function (msg, match) {
   bot.sendChatAction(chatId,'upload_photo');
 
   giphy.translate('chewbacca').then((res)=>{
-    var gifUrl = res.data.images.fixed_height_downsampled.url;
+    var gifUrl = res.data.images.fixed_height.url;
     console.log("Sending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " : ");
     var gifFile = "gifs/"+(new Date()).getTime()+".gif";
     downloadFile(gifUrl,gifFile,(a)=>{
