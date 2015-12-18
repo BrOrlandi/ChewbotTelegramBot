@@ -37,7 +37,7 @@ bot.onText(/\/gif/, function (msg, match) {
 
   giphy.translate('chewbacca').then((res)=>{
     var gifUrl = res.data.images.fixed_height.url;
-    console.log("Sending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
+    console.log("XSending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
     var gifFile = "gifs/"+(new Date()).getTime()+".gif";
     downloadFile(gifUrl,gifFile,(a)=>{
         //console.log("File downloaded: "+gifFile);
@@ -57,7 +57,7 @@ bot.on('message', function (msg) {
     return;
 
   var chatId = msg.chat.id;
-  console.log("From: "+msg.from.first_name + " " + msg.from.last_name+ " : "+ msg.text);
+  console.log("From: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): "+ msg.text);
   bot.sendChatAction(chatId,'record_audio');
 
   var rand = Math.floor(Math.random()*18)+1;
