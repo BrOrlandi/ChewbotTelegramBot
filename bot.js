@@ -1,6 +1,17 @@
 var TelegramBot = require('node-telegram-bot-api');
 var giphy = require('giphy-api')();
 
+var spoilerMessage = require('./spoiler/spoiler_message.json');
+var helpMessage = `Send messages to Chewbacca and he will answer you.
+
+He accepts these commands too:
+/gif get a random Chewbacca Gif.
+/theforceawakens get a tribute to Star Wars Episode VII movie. If you haven't watched the new movie yet, DON'T USE THIS COMMAND!
+
+Have fun with Chewbacca!
+`;
+
+
 var token = process.env.TOKEN || "";
 
 if(token === ""){
@@ -24,12 +35,13 @@ var downloadFile = function(url, dest, cb) {
   });
 }
 
-
+// Star command
 bot.onText(/\/start/, function (msg, match) {
   var fromId = msg.from.id;
   bot.sendMessage(fromId, "RRRAARRWHHGWWR!");
 });
 
+// GIF command
 bot.onText(/\/gif/, function (msg, match) {
   var chatId = msg.chat.id;
   var replyTo = msg.message_id;
@@ -37,7 +49,7 @@ bot.onText(/\/gif/, function (msg, match) {
 
   giphy.translate('chewbacca').then((res)=>{
     var gifUrl = res.data.images.fixed_height.url;
-    console.log("XSending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
+    console.log("Sending gif "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
     var gifFile = "gifs/"+(new Date()).getTime()+".gif";
     downloadFile(gifUrl,gifFile,(a)=>{
         //console.log("File downloaded: "+gifFile);
@@ -48,8 +60,6 @@ bot.onText(/\/gif/, function (msg, match) {
     
   });
 });
-
-
 
 // Any kind of message
 bot.on('message', function (msg) {
@@ -70,5 +80,25 @@ bot.on('message', function (msg) {
     bot.sendVoice(chatId, audio, {reply_to_message_id: replyTo});
   },randTime);
 });
+
+
+// Help command
+bot.onText(/\/help/, function (msg, match) {
+  var chatId = msg.chat.id;
+
+  bot.sendMessage(chatId,helpMessage);
+});
+
+
+// THE FORCE AWAKENS TRIBUTE
+bot.onText(/\/theforceawakens/, function (msg, match) {
+  var chatId = msg.chat.id;
+  var replyTo = msg.message_id;
+  bot.sendChatAction(chatId,'upload_photo');
+
+  bot.sendPhoto(chatId,'spoiler/not_spoiler.jpg',{reply_to_message_id: replyTo, caption: spoilerMessage});
+});
+
+
 
 console.log("Chewbacca bot running...");
