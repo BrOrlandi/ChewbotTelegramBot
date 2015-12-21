@@ -94,6 +94,7 @@ bot.onText(/\/help/, function (msg, match) {
 bot.onText(/\/theforceawakens/, function (msg, match) {
   var chatId = msg.chat.id;
   var replyTo = msg.message_id;
+  console.log(msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +")  executed The Force Awakens command.");
   bot.sendChatAction(chatId,'upload_photo');
 
   bot.sendPhoto(chatId,'spoiler/not_spoiler.jpg',{reply_to_message_id: replyTo, caption: spoilerMessage});
