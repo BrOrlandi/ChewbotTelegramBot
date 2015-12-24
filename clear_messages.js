@@ -16,6 +16,9 @@ var bot = new TelegramBot(token, {polling: true});
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
   console.log("From: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): "+ msg.text);
+
+  var fromId = msg.from.id;
+  bot.sendMessage(fromId, "Down for maintence.");
 });
 
 console.log("Bot running...");
