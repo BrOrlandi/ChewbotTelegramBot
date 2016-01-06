@@ -50,7 +50,7 @@ bot.onText(/\/gif/, function (msg, match) {
 
   giphy.translate('chewbacca').then((res)=>{
     var gifUrl = res.data.images.fixed_height.url;
-    console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] GIF: "+ gifUrl +" to: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
+    console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] GIF: "+ gifUrl +" to: ["+chatId+"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): ");
     var gifFile = "gifs/"+(new Date()).getTime()+".gif";
     downloadFile(gifUrl,gifFile,(a)=>{
         //console.log("File downloaded: "+gifFile);
@@ -68,7 +68,7 @@ bot.on('message', function (msg) {
     return;
 
   var chatId = msg.chat.id;
-  console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): "+ msg.text);
+  console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] [id:"+chatId+"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): "+ msg.text);
   bot.sendChatAction(chatId,'record_audio');
 
   var rand = Math.floor(Math.random()*18)+1;
@@ -95,7 +95,7 @@ bot.onText(/\/help/, function (msg, match) {
 bot.onText(/\/theforceawakens/, function (msg, match) {
   var chatId = msg.chat.id;
   var replyTo = msg.message_id;
-  console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] The Force Awakens command: "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +")");
+  console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] The Force Awakens command: ["+chatId+"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +")");
   bot.sendChatAction(chatId,'upload_photo');
 
   bot.sendPhoto(chatId,'spoiler/not_spoiler.jpg',{reply_to_message_id: replyTo, caption: spoilerMessage});
