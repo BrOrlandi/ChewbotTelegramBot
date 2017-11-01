@@ -80,7 +80,7 @@ var sendVoice = function (msg) {
 
 // Any kind of message
 bot.on('message', function (msg) {
-   if(msg.text.startsWith('/'))
+  if(msg.text.startsWith('/'))
     return;
 
   return sendVoice(msg);
