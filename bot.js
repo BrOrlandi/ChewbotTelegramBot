@@ -62,11 +62,7 @@ bot.onText(/\/gif/, function (msg, match) {
   });
 });
 
-// Any kind of message
-bot.on('message', function (msg) {
-   if(msg.text.startsWith('/'))
-    return;
-
+var sendVoice = function (msg) {
   var chatId = msg.chat.id;
   console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] [id:"+chatId+"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +"): "+ msg.text);
   bot.sendChatAction(chatId,'record_audio');
@@ -80,6 +76,14 @@ bot.on('message', function (msg) {
   setTimeout(()=>{
     bot.sendVoice(chatId, audio, {reply_to_message_id: replyTo});
   },randTime);
+};
+
+// Any kind of message
+bot.on('message', function (msg) {
+   if(msg.text.startsWith('/'))
+    return;
+
+  return sendVoice(msg);
 });
 
 
