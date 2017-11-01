@@ -78,6 +78,8 @@ var sendVoice = function (msg) {
   },randTime);
 };
 
+bot.onText(/\/chewie/, sendVoice);
+
 // Any kind of message
 bot.on('message', function (msg) {
   if(msg.text.startsWith('/'))
