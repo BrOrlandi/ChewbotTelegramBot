@@ -1,12 +1,11 @@
 var TelegramBot = require('node-telegram-bot-api');
 var giphy = require('giphy-api')();
 
-var spoilerMessage = require('./spoiler/spoiler_message.json');
 var helpMessage = `Send messages to Chewbacca and he will answer you.
 
 He accepts these commands too:
 /gif get a random Chewbacca Gif.
-/theforceawakens get a tribute to Star Wars Episode VII movie. If you haven't watched the new movie yet, DON'T USE THIS COMMAND!
+/chewie talks to Chewbot when you add him in groups
 
 Any problem with the bot, contact the creator: @BrunoOrlandi
 Have fun with Chewbacca!
@@ -94,17 +93,6 @@ bot.onText(/\/help/, function (msg, match) {
   var chatId = msg.chat.id;
 
   bot.sendMessage(chatId,helpMessage);
-});
-
-
-// THE FORCE AWAKENS TRIBUTE
-bot.onText(/\/theforceawakens/, function (msg, match) {
-  var chatId = msg.chat.id;
-  var replyTo = msg.message_id;
-  console.log("["+ (new Date(msg.date*1000)).toLocaleString() +"] The Force Awakens command: ["+chatId+"] "+msg.from.first_name + " " + msg.from.last_name+ " ("+msg.from.username +")");
-  bot.sendChatAction(chatId,'upload_photo');
-
-  bot.sendPhoto(chatId,'spoiler/not_spoiler.jpg',{reply_to_message_id: replyTo, caption: spoilerMessage});
 });
 
 
